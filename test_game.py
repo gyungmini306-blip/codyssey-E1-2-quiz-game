@@ -11,7 +11,7 @@ from main import QuizGame, read_number
 
 class GameTests(unittest.TestCase):
     def setUp(self):
-        self.directory = tempfile.TemporaryDirectory()
+        self.directory = tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parent)
         self.addCleanup(self.directory.cleanup)
         self.path = Path(self.directory.name) / "state.json"
         self.output = io.StringIO()

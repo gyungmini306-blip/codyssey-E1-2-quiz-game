@@ -1,3 +1,6 @@
+from defaults import create_default_quizzes
+
+
 def read_number(prompt, minimum, maximum):
     """유효한 범위의 정수를 입력할 때까지 다시 묻습니다."""
     while True:
@@ -16,6 +19,10 @@ def read_number(prompt, minimum, maximum):
 
 
 class QuizGame:
+    def __init__(self):
+        self.quizzes = create_default_quizzes()
+        self.best_score = None
+
     def show_menu(self):
         print("\n=== 코디세이 E1-1 · E1-2 복습 퀴즈 ===")
         print("1. 퀴즈 풀기\n2. 퀴즈 추가\n3. 퀴즈 목록\n4. 점수 확인\n5. 종료")

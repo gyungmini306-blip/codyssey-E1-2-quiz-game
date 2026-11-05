@@ -152,13 +152,15 @@ git pull
 
 ## 제출 체크리스트
 
-- [ ] GitHub 저장소 업로드 및 URL 확인
+- [x] GitHub 저장소 업로드 및 URL 확인
 - [ ] VS Code, Python 버전, Git 설정 등 개발 환경 스크린샷
 - [ ] 퀴즈 추가, 목록, 플레이, 점수 확인 실행 스크린샷
-- [ ] 종료 후 재실행하여 데이터 유지 확인
+- [x] 종료 후 재실행하여 데이터 유지 확인 (자동 검증)
 - [ ] `git log --oneline --graph --all` 결과 스크린샷
-- [ ] GitHub 저장소 clone → 변경 → commit → push → 원본 pull 실습
+- [x] GitHub 저장소 clone → 변경 → commit → push → 원본 pull 실습
 - [ ] 코드의 입력 처리, 클래스, 저장 흐름을 직접 설명할 수 있는지 확인
 
 스크린샷을 `docs/screenshots/`에 저장한 경우 README에 상대 경로 링크를 추가합니다.
 토큰과 비밀번호는 캡처하지 않습니다.
+
+복제 저장소에서 변경 후 원본으로 pull 실습 완료.

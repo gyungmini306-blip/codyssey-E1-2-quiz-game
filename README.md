@@ -1,6 +1,10 @@
-# 코디세이 복습 퀴즈
+# 코디세이 E1-2 — Python 콘솔 퀴즈 게임
 
+코디세이 입학연수 E1-2 「컴퓨터에게 명령 내리는 말(파이썬) 처음 배우기」 과제입니다.
 E1-1과 E1-2에서 학습한 내용을 복습하는 Python 콘솔 퀴즈 게임입니다.
+
+- GitHub 저장소: [codyssey-E1-2-quiz-game](https://github.com/gyungmini306-blip/codyssey-E1-2-quiz-game)
+- 이전 과제: [E1-1 개발 워크스테이션](https://github.com/gyungmini306-blip/codyssey-E1-1-dev-workstation)
 
 ## 주제 선정 이유
 
@@ -111,16 +115,15 @@ Ctrl+C·EOF 중단 후 저장, 읽기·쓰기 오류 처리.
 git log --oneline --graph --all
 ```
 
-## GitHub 연결 및 남은 제출 실습
+## GitHub 연결 및 복제 실습 방법
 
-아래 절차는 GitHub 저장소를 생성한 후 직접 수행해야 합니다.
-예시의 `YOUR_ID`를 자신의 GitHub 사용자 이름으로 바꿉니다.
+아래는 이 프로젝트의 GitHub 연결 및 복제 실습 명령입니다.
 
-1. GitHub에서 `codyssey-quiz`라는 빈 저장소를 만듭니다. README, .gitignore, 라이선스를 자동 생성하지 않습니다.
+1. GitHub에서 `codyssey-E1-2-quiz-game`이라는 빈 저장소를 만듭니다. README, .gitignore, 라이선스를 자동 생성하지 않습니다.
 2. 이 프로젝트 폴더에서 원격 저장소에 연결하고 업로드합니다.
 
 ```shell
-git remote add origin https://github.com/YOUR_ID/codyssey-quiz.git
+git remote add origin https://github.com/gyungmini306-blip/codyssey-E1-2-quiz-game.git
 git push -u origin main
 git push origin feature/play
 ```
@@ -129,7 +132,7 @@ git push origin feature/play
 
 ```shell
 cd ..
-git clone https://github.com/YOUR_ID/codyssey-quiz.git codyssey-quiz-clone
+git clone https://github.com/gyungmini306-blip/codyssey-E1-2-quiz-game.git codyssey-quiz-clone
 cd codyssey-quiz-clone
 ```
 
@@ -145,7 +148,7 @@ git pull
 
 5. 원본 README에 추가한 문장이 나타나는지 확인합니다.
 명령 입력과 출력 결과를 캡처하여 clone과 pull 실습 증거로 남깁니다.
-위 절차는 아직 수행하지 않은 실습 안내이며 완료 기록이 아닙니다.
+실제 수행 결과는 [GitHub 업로드 및 복제 실습 기록](docs/git-workflow.md)에 정리합니다.
 
 ## 제출 체크리스트
 

@@ -1,4 +1,5 @@
 from defaults import create_default_quizzes
+from quiz import Quiz
 
 
 def read_number(prompt, minimum, maximum):
@@ -18,6 +19,14 @@ def read_number(prompt, minimum, maximum):
         print(f"{minimum}~{maximum} 사이의 숫자를 입력하세요.")
 
 
+def read_text(prompt):
+    while True:
+        text = input(prompt).strip()
+        if text:
+            return text
+        print("빈 내용은 등록할 수 없습니다. 다시 입력하세요.")
+
+
 class QuizGame:
     def __init__(self):
         self.quizzes = create_default_quizzes()
@@ -26,6 +35,14 @@ class QuizGame:
     def show_menu(self):
         print("\n=== 코디세이 E1-1 · E1-2 복습 퀴즈 ===")
         print("1. 퀴즈 풀기\n2. 퀴즈 추가\n3. 퀴즈 목록\n4. 점수 확인\n5. 종료")
+
+    def add_quiz(self):
+        print("\n새 퀴즈를 등록합니다.")
+        question = read_text("문제: ")
+        choices = [read_text(f"선택지 {number}: ") for number in range(1, 5)]
+        answer = read_number("정답 번호 (1~4): ", 1, 4)
+        self.quizzes.append(Quiz(question, choices, answer))
+        print("퀴즈가 추가되었습니다.")
 
     def play(self):
         if not self.quizzes:
@@ -56,6 +73,8 @@ class QuizGame:
                     break
                 if choice == 1:
                     self.play()
+                elif choice == 2:
+                    self.add_quiz()
                 else:
                     print("이 기능은 개발 중입니다.")
         except (KeyboardInterrupt, EOFError):

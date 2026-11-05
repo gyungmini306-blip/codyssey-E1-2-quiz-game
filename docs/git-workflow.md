@@ -41,7 +41,7 @@ Cloning into 'work/codyssey-quiz-clone'...
 ```
 
 복제본에서 변경사항을 커밋하고 업로드한 뒤 원본에서 가져오는 순서는 다음과 같습니다.
-실제 커밋 번호와 pull 결과는 원본에서 확인한 후 아래에 추가합니다.
+복제본의 커밋 번호는 `2a723ea`이며, 원본에서 다음 pull 결과를 확인했습니다.
 
 ```shell
 git add README.md docs/git-workflow.md
@@ -50,6 +50,20 @@ git push
 # 원본 프로젝트 디렉터리에서
 git pull --ff-only
 ```
+
+```text
+From https://github.com/gyungmini306-blip/codyssey-E1-2-quiz-game
+   140dcb9..2a723ea  main -> origin/main
+Updating 140dcb9..2a723ea
+Fast-forward
+ README.md            |  8 ++++---
+ docs/git-workflow.md | 65 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 70 insertions(+), 3 deletions(-)
+ create mode 100644 docs/git-workflow.md
+```
+
+원본에서 `git log -1 --oneline`로 `2a723ea` 커밋을 확인하고,
+README에 실습 문장이 반영된 것을 확인했습니다.
 
 ## 자동 검증
 

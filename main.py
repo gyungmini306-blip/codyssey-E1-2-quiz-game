@@ -1,3 +1,7 @@
+import json
+import math
+from pathlib import Path
+
 from defaults import create_default_quizzes
 from quiz import Quiz
 
@@ -28,9 +32,58 @@ def read_text(prompt):
 
 
 class QuizGame:
-    def __init__(self):
+    def __init__(self, state_path=None):
+        self.state_path = (
+            Path(state_path) if state_path is not None
+            else Path(__file__).resolve().parent / "state.json"
+        )
         self.quizzes = create_default_quizzes()
         self.best_score = None
+        self.load_state()
+
+    def load_state(self):
+        try:
+            with self.state_path.open("r", encoding="utf-8") as file:
+                data = json.load(file)
+            if not isinstance(data, dict) or not isinstance(data.get("quizzes"), list):
+                raise ValueError("quizzes는 목록이어야 합니다.")
+            quizzes = []
+            for item in data["quizzes"]:
+                if not isinstance(item, dict):
+                    raise ValueError("퀴즈 항목은 객체여야 합니다.")
+                quizzes.append(Quiz(item["question"], item["choices"], item["answer"]))
+            best_score = data["best_score"]
+            if best_score is not None and (
+                type(best_score) not in (int, float)
+                or not math.isfinite(best_score)
+                or not 0 <= best_score <= 100
+            ):
+                raise ValueError("최고 점수는 null 또는 0~100의 숫자여야 합니다.")
+            self.quizzes = quizzes
+            self.best_score = best_score
+            print(f"저장된 데이터를 불러왔습니다. (퀴즈 {len(quizzes)}개)")
+        except FileNotFoundError:
+            print("저장 파일이 없어 기본 퀴즈 5개로 시작합니다.")
+        except (ValueError, KeyError, TypeError, UnicodeError, RecursionError):
+            print("저장 파일이 손상되었거나 형식이 올바르지 않아 기본 데이터로 초기화합니다.")
+        except OSError:
+            print("저장 파일을 읽을 수 없어 기본 데이터로 시작합니다.")
+
+    def save_state(self):
+        data = {
+            "quizzes": [quiz.to_dict() for quiz in self.quizzes],
+            "best_score": self.best_score,
+        }
+        temporary_path = self.state_path.with_name(self.state_path.name + ".tmp")
+        try:
+            with temporary_path.open("w", encoding="utf-8") as file:
+                json.dump(data, file, ensure_ascii=False, indent=2, allow_nan=False)
+                file.write("\n")
+            temporary_path.replace(self.state_path)
+            return True
+        except (OSError, ValueError, UnicodeError):
+            print("파일 저장에 실패했습니다. 폴더 권한과 저장 공간을 확인하세요.")
+            return False
 
     def show_menu(self):
         print("\n=== 코디세이 E1-1 · E1-2 복습 퀴즈 ===")
@@ -57,6 +110,7 @@ class QuizGame:
         answer = read_number("정답 번호 (1~4): ", 1, 4)
         self.quizzes.append(Quiz(question, choices, answer))
         print("퀴즈가 추가되었습니다.")
+        self.save_state()
 
     def play(self):
         if not self.quizzes:
@@ -78,6 +132,7 @@ class QuizGame:
         if self.best_score is None or score > self.best_score:
             self.best_score = score
             print("새로운 최고 점수입니다!")
+        self.save_state()
         return score
 
     def run(self):
@@ -98,7 +153,13 @@ class QuizGame:
                     self.show_score()
         except (KeyboardInterrupt, EOFError):
             print("\n입력이 중단되어 안전하게 종료합니다.")
+        finally:
+            if self.save_state():
+                print("데이터를 저장했습니다.")
 
 
 if __name__ == "__main__":
-    QuizGame().run()
+    try:
+        QuizGame().run()
+    except (KeyboardInterrupt, EOFError):
+        print("\n프로그램 시작 또는 저장 중 입력이 중단되어 종료합니다.")

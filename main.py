@@ -1,5 +1,6 @@
 import json
 import math
+import random
 from pathlib import Path
 
 from defaults import create_default_quizzes
@@ -117,8 +118,11 @@ class QuizGame:
             print("등록된 퀴즈가 없습니다. 먼저 퀴즈를 추가하세요.")
             return
         correct = 0
-        total = len(self.quizzes)
-        for number, quiz in enumerate(self.quizzes, start=1):
+        questions = self.quizzes.copy()
+        random.shuffle(questions)
+        total = len(questions)
+        print(f"\n퀴즈를 무작위 순서로 출제합니다. (총 {total}문제)")
+        for number, quiz in enumerate(questions, start=1):
             print(f"\n[문제 {number}/{total}]")
             quiz.display()
             answer = read_number("정답 번호 (1~4): ", 1, 4)

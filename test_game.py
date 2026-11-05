@@ -27,7 +27,7 @@ class GameTests(unittest.TestCase):
         game = QuizGame(self.path)
         with patch("builtins.input", side_effect=["", "새 문제", "가", "나", "다", "라", "x", "5", "2"]):
             game.add_quiz()
-        with patch("builtins.input", side_effect=["1", "2", "3", "4", "1", "2"]):
+        with patch("main.random.shuffle"), patch("builtins.input", side_effect=["1", "2", "3", "4", "1", "2"]):
             self.assertEqual(game.play(), 100)
         restored = QuizGame(self.path)
         self.assertEqual(len(restored.quizzes), 6)
@@ -36,6 +36,23 @@ class GameTests(unittest.TestCase):
         with patch("builtins.input", return_value="3"):
             restored.play()
         self.assertEqual(QuizGame(self.path).best_score, 100)
+
+    def test_random_order_plays_every_question_without_changing_saved_order(self):
+        game = QuizGame(self.path)
+        original_questions = [quiz.question for quiz in game.quizzes]
+        reversed_answers = [str(quiz.answer) for quiz in reversed(game.quizzes)]
+        with patch("main.random.shuffle", side_effect=lambda items: items.reverse()), patch(
+            "builtins.input", side_effect=reversed_answers
+        ):
+            self.assertEqual(game.play(), 100)
+        output = self.output.getvalue()
+        positions = [output.index(question) for question in reversed(original_questions)]
+        self.assertEqual(positions, sorted(positions))
+        for question in original_questions:
+            self.assertEqual(output.count(question), 1)
+        self.assertEqual([quiz.question for quiz in game.quizzes], original_questions)
+        saved = json.loads(self.path.read_text(encoding="utf-8"))
+        self.assertEqual([quiz["question"] for quiz in saved["quizzes"]], original_questions)
 
     def test_corrupt_and_invalid_schema_restore_defaults(self):
         cases = ["{broken", "[]", '{"quizzes": [], "best_score": true}',

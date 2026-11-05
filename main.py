@@ -27,6 +27,25 @@ class QuizGame:
         print("\n=== 코디세이 E1-1 · E1-2 복습 퀴즈 ===")
         print("1. 퀴즈 풀기\n2. 퀴즈 추가\n3. 퀴즈 목록\n4. 점수 확인\n5. 종료")
 
+    def play(self):
+        if not self.quizzes:
+            print("등록된 퀴즈가 없습니다. 먼저 퀴즈를 추가하세요.")
+            return
+        correct = 0
+        total = len(self.quizzes)
+        for number, quiz in enumerate(self.quizzes, start=1):
+            print(f"\n[문제 {number}/{total}]")
+            quiz.display()
+            answer = read_number("정답 번호 (1~4): ", 1, 4)
+            if quiz.is_correct(answer):
+                print("정답입니다!")
+                correct += 1
+            else:
+                print(f"오답입니다. 정답: {quiz.answer}. {quiz.choices[quiz.answer - 1]}")
+        score = round(correct / total * 100, 2)
+        print(f"\n결과: {total}문제 중 {correct}문제 정답! ({score:g}점)")
+        return score
+
     def run(self):
         try:
             while True:
@@ -35,7 +54,10 @@ class QuizGame:
                 if choice == 5:
                     print("퀴즈 게임을 종료합니다.")
                     break
-                print("이 기능은 개발 중입니다.")
+                if choice == 1:
+                    self.play()
+                else:
+                    print("이 기능은 개발 중입니다.")
         except (KeyboardInterrupt, EOFError):
             print("\n입력이 중단되어 안전하게 종료합니다.")
 

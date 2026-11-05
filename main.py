@@ -36,6 +36,12 @@ class QuizGame:
         print("\n=== 코디세이 E1-1 · E1-2 복습 퀴즈 ===")
         print("1. 퀴즈 풀기\n2. 퀴즈 추가\n3. 퀴즈 목록\n4. 점수 확인\n5. 종료")
 
+    def show_score(self):
+        if self.best_score is None:
+            print("아직 완료한 게임이 없습니다. 퀴즈를 먼저 풀어 보세요.")
+        else:
+            print(f"최고 점수: {self.best_score:g}점 (100점 만점)")
+
     def list_quizzes(self):
         if not self.quizzes:
             print("등록된 퀴즈가 없습니다.")
@@ -69,6 +75,9 @@ class QuizGame:
                 print(f"오답입니다. 정답: {quiz.answer}. {quiz.choices[quiz.answer - 1]}")
         score = round(correct / total * 100, 2)
         print(f"\n결과: {total}문제 중 {correct}문제 정답! ({score:g}점)")
+        if self.best_score is None or score > self.best_score:
+            self.best_score = score
+            print("새로운 최고 점수입니다!")
         return score
 
     def run(self):
@@ -85,8 +94,8 @@ class QuizGame:
                     self.add_quiz()
                 elif choice == 3:
                     self.list_quizzes()
-                else:
-                    print("이 기능은 개발 중입니다.")
+                elif choice == 4:
+                    self.show_score()
         except (KeyboardInterrupt, EOFError):
             print("\n입력이 중단되어 안전하게 종료합니다.")
 

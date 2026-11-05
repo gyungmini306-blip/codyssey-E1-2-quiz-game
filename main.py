@@ -36,6 +36,14 @@ class QuizGame:
         print("\n=== 코디세이 E1-1 · E1-2 복습 퀴즈 ===")
         print("1. 퀴즈 풀기\n2. 퀴즈 추가\n3. 퀴즈 목록\n4. 점수 확인\n5. 종료")
 
+    def list_quizzes(self):
+        if not self.quizzes:
+            print("등록된 퀴즈가 없습니다.")
+            return
+        print(f"\n등록된 퀴즈 목록 (총 {len(self.quizzes)}개)")
+        for number, quiz in enumerate(self.quizzes, start=1):
+            print(f"[{number}] {quiz.question}")
+
     def add_quiz(self):
         print("\n새 퀴즈를 등록합니다.")
         question = read_text("문제: ")
@@ -75,6 +83,8 @@ class QuizGame:
                     self.play()
                 elif choice == 2:
                     self.add_quiz()
+                elif choice == 3:
+                    self.list_quizzes()
                 else:
                     print("이 기능은 개발 중입니다.")
         except (KeyboardInterrupt, EOFError):

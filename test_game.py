@@ -57,6 +57,9 @@ class GameTests(unittest.TestCase):
     def test_corrupt_and_invalid_schema_restore_defaults(self):
         cases = ["{broken", "[]", '{"quizzes": [], "best_score": true}',
                  '{"quizzes": [], "best_score": 101}',
+                 '{"quizzes": [], "best_score": ' + '9' * 400 + '}',
+                 '{"quizzes": [], "best_score": NaN}',
+                 '{"quizzes": [], "best_score": Infinity}',
                  '{"quizzes": [{}], "best_score": null}']
         for content in cases:
             with self.subTest(content=content):

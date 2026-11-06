@@ -1,5 +1,4 @@
 import json
-import math
 import random
 from pathlib import Path
 
@@ -56,7 +55,6 @@ class QuizGame:
             best_score = data["best_score"]
             if best_score is not None and (
                 type(best_score) not in (int, float)
-                or not math.isfinite(best_score)
                 or not 0 <= best_score <= 100
             ):
                 raise ValueError("최고 점수는 null 또는 0~100의 숫자여야 합니다.")

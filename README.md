@@ -1,4 +1,13 @@
 # 코디세이 E1-2 — Python 콘솔 퀴즈 게임
+## 현재 로컬 작업 위치
+
+이 과제의 현재 작업 폴더는 `C:\Users\gyung\codyssey\e1-2`입니다.
+PowerShell에서 아래 명령으로 이동한 뒤 이 문서의 실습 명령을 실행합니다.
+
+```powershell
+cd C:\Users\gyung\codyssey\e1-2
+```
+
 
 코디세이 입학연수 E1-2 「컴퓨터에게 명령 내리는 말(파이썬) 처음 배우기」 과제입니다.
 E1-1과 E1-2에서 학습한 내용을 복습하는 Python 콘솔 퀴즈 게임입니다.
@@ -87,7 +96,7 @@ Ctrl+C 또는 입력 스트림 종료 시 안내 후 저장을 시도합니다.
 ## 파일 구조
 
 ```text
-codyssey-quiz/
+e1-2/
 ├── main.py          # QuizGame, 입력 처리, 메뉴, 진행, 저장/불러오기
 ├── quiz.py          # Quiz: 개별 문제 검증, 출력, 정답 확인
 ├── defaults.py      # 기본 퀴즈 5개 생성
@@ -188,7 +197,7 @@ cd codyssey-quiz-clone
 git add README.md
 git commit -m "Docs: 복제 저장소 변경 실습 기록 추가"
 git push
-cd ../codyssey-quiz
+cd ../e1-2
 git pull
 ```
 
@@ -201,15 +210,37 @@ git pull
 - [x] GitHub 저장소 업로드 및 URL 확인
 - [x] 필수 프로그램 기능과 보너스 랜덤 출제 검증
 - [x] 실제 실행 및 데이터 유지·오류 처리 결과를 텍스트로 기록
-- [ ] VS Code, Python 버전, Git 설정 등 개발 환경 스크린샷
+- [x] VS Code, Python 버전, Git 설정 등 개발 환경 스크린샷
 - [ ] 퀴즈 추가, 목록, 플레이, 점수 확인 실행 스크린샷
 - [x] 종료 후 재실행하여 데이터 유지 확인 (자동 검증 및 실제 프로세스 실행)
-- [ ] `git log --oneline --graph --all` 결과 스크린샷
+- [x] `git log --oneline --graph --all` 결과 스크린샷 (실제 출력을 VS Code에서 열어 촬영)
 - [x] GitHub 저장소 clone → 변경 → commit → push → 원본 pull 실습
 - [ ] 코드의 입력 처리, 클래스, 저장 흐름을 직접 설명할 수 있는지 확인
 
 스크린샷을 `docs/screenshots/`에 저장한 경우 README에 상대 경로 링크를 추가합니다.
 토큰과 비밀번호는 캡처하지 않습니다.
-스크린샷은 이번 작업 범위에서 제외했으며, 위의 미완료 항목을 완료로 표시하지 않았습니다.
+개발 환경과 Git 이력 이미지를 확보했습니다. 퀴즈 실행 이미지와 본인 학습 확인은 아직 미완료입니다.
 
 복제 저장소에서 변경 후 원본으로 pull 실습 완료.
+
+## 스크린샷 증거
+
+### 개발 환경
+
+사용자가 촬영한 실제 Python·Git 버전 및 사용자 설정 화면입니다.
+
+![Python 및 Git 환경](docs/screenshots/environment.png)
+
+사용자가 촬영한 VS Code 소스 제어 및 프로젝트 이력 화면입니다.
+
+![VS Code 개발 환경](docs/screenshots/vscode-git.png)
+
+### Git 이력
+
+실제 `git log --oneline --graph --all` 출력을 [텍스트 파일](docs/git-graph.txt)로 저장하고 VS Code에서 열어 촬영했습니다. 터미널 화면을 재구성한 이미지가 아닙니다.
+
+![실제 Git 그래프 출력을 표시한 VS Code](docs/screenshots/git-graph.png)
+
+### 퀴즈 실행
+
+추가·목록·플레이·점수 확인의 실제 실행 스크린샷은 아직 수집하지 않았습니다.

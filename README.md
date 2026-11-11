@@ -244,12 +244,12 @@ git pull
 
 ### 퀴즈 실행
 
-퀴즈 추가 후 총 6문제를 풀어 100점을 기록했습니다. 최고 점수 확인과 종료 시 저장 안내도 확인했습니다.
+퀴즈 추가 후 총 6문제를 풀어 100점을 기록했습니다. 아래 화면은 등록 입력과 완료 안내, 출제와 정답 판정, 최종 결과와 최고 점수가 보이도록 잘랐습니다.
 
-![퀴즈 추가 완료 및 출제 시작](docs/screenshots/quiz-add.png)
+![퀴즈 등록 입력 및 추가 완료](docs/screenshots/quiz-add.png)
 
 ![퀴즈 출제와 정답 판정](docs/screenshots/quiz-play.png)
 
-![플레이 결과, 최고 점수 및 종료 시 저장](docs/screenshots/quiz-score.png)
+![플레이 결과와 최고 점수 확인](docs/screenshots/quiz-score.png)
 
 퀴즈 목록 화면은 추가 촬영이 필요합니다.

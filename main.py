@@ -104,7 +104,7 @@ class QuizGame:
             return False
 
     def show_menu(self):
-        print("\n=== 코디세이 E1-1 · E1-2 복습 퀴즈 ===")
+        print("\n=== 코디세이 E1-2 · 파이썬 기초 퀴즈 ===")
         print("1. 퀴즈 풀기\n2. 퀴즈 추가\n3. 퀴즈 목록\n4. 점수 확인\n5. 종료")
 
     def show_score(self):

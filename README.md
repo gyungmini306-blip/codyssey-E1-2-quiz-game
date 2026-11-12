@@ -246,53 +246,19 @@ git pull
 - [x] GitHub 저장소 업로드 및 URL 확인
 - [x] 필수 프로그램 기능과 보너스 랜덤 출제 검증
 - [x] 실제 실행 및 데이터 유지·오류 처리 결과를 텍스트로 기록
-- [x] VS Code, Python 버전, Git 설정 등 개발 환경 스크린샷
-- [x] 퀴즈 추가, 플레이, 점수 확인 실행 스크린샷
-- [x] 퀴즈 목록 실행 스크린샷
+- [ ] VS Code, Python 버전, Git 설정 등 개발 환경 스크린샷
+- [ ] 퀴즈 추가, 플레이, 점수 확인 실행 스크린샷
+- [ ] 퀴즈 목록 실행 스크린샷
 - [x] 종료 후 재실행하여 데이터 유지 확인 (자동 검증 및 실제 프로세스 실행)
-- [x] `git log --oneline --graph --all` 결과 스크린샷 (실제 출력을 VS Code에서 열어 촬영)
+- [ ] `git log --oneline --graph --all` 결과 스크린샷
 - [x] GitHub 저장소 clone → 변경 → commit → push → 원본 pull 실습
 - [ ] 코드의 입력 처리, 클래스, 저장 흐름을 직접 설명할 수 있는지 확인
 
 스크린샷을 `docs/screenshots/`에 저장한 경우 README에 상대 경로 링크를 추가합니다.
 토큰과 비밀번호는 캡처하지 않습니다.
-개발 환경과 Git 이력 이미지를 확보했습니다. 실행 화면을 모두 확보했습니다. 본인 학습 확인은 아직 미완료입니다.
 
 복제 저장소에서 변경 후 원본으로 pull 실습 완료.
 
 ## 스크린샷 증거
 
-<details>
-<summary>개발 환경과 실행 화면 펼치기</summary>
-
-### 개발 환경
-
-사용자가 촬영한 실제 Python·Git 버전 및 사용자 설정 화면입니다.
-
-![Python 및 Git 환경](docs/screenshots/environment.png)
-
-사용자가 촬영한 VS Code 소스 제어 및 프로젝트 이력 화면입니다.
-
-![VS Code 개발 환경](docs/screenshots/vscode-git.png)
-
-### Git 이력
-
-실제 `git log --oneline --graph --all` 출력을 [텍스트 파일](docs/git-graph.txt)로 저장하고 VS Code에서 열어 촬영했습니다. 터미널 화면을 재구성한 이미지가 아닙니다.
-
-![실제 Git 그래프 출력을 표시한 VS Code](docs/screenshots/git-graph.png)
-
-### 퀴즈 실행
-
-퀴즈 추가 후 총 6문제를 풀어 100점을 기록했습니다. 아래 화면은 등록 입력과 완료 안내, 출제와 정답 판정, 최종 결과와 최고 점수가 보이도록 잘랐습니다.
-
-![퀴즈 등록 입력 및 추가 완료](docs/screenshots/quiz-add.png)
-
-![퀴즈 출제와 정답 판정](docs/screenshots/quiz-play.png)
-
-![플레이 결과와 최고 점수 확인](docs/screenshots/quiz-score.png)
-
-기본 문제를 파이썬 기초로 교체하기 전에 촬영한 목록 화면입니다. 메뉴 3에서 기본 문제 5개와 추가한 문제 1개를 확인했습니다.
-
-![등록된 퀴즈 목록 6개](docs/screenshots/quiz-list.png)
-
-</details>
+새 스크린샷 촬영 후 추가합니다.

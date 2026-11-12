@@ -54,6 +54,21 @@ Ctrl+C 또는 입력 스트림 종료 시 안내 후 저장을 시도합니다.
 선택지와 정답 번호는 바뀌지 않으며, 모든 문제를 한 번씩 출제합니다.
 무작위이므로 이전 게임과 같은 순서가 나올 수도 있습니다.
 
+
+**코드 · QuizGame.play()의 랜덤 출제**
+
+```python
+questions = self.quizzes.copy()
+random.shuffle(questions)
+total = len(questions)
+print(f"\n퀴즈를 무작위 순서로 출제합니다. (총 {total}문제)")
+for number, quiz in enumerate(questions, start=1):
+    print(f"\n[문제 {number}/{total}]")
+    quiz.display()
+```
+
+`copy()`는 이번 출제에 쓸 별도 리스트를 만듭니다. `random.shuffle(questions)`는 그 리스트의 순서를 바꿉니다. 아래 `for`가 `self.quizzes` 대신 `questions`를 순회하므로 출제 순서만 바뀌고 등록 목록 순서는 유지됩니다.
+
 ## 직접 체험하기
 
 프로젝트 폴더에서 `python main.py`를 실행하고 원하는 기능의 번호를 입력합니다. 아래 사진은 기능별 실행 예시입니다.
@@ -64,11 +79,35 @@ Ctrl+C 또는 입력 스트림 종료 시 안내 후 저장을 시도합니다.
 
 ![퀴즈 등록 입력과 추가 완료 안내](docs/screenshots/quiz-add.png)
 
+**코드 · QuizGame.add_quiz()**
+
+```python
+question = read_text("문제: ")
+choices = [read_text(f"선택지 {number}: ") for number in range(1, 5)]
+answer = read_number("정답 번호 (1~4): ", 1, 4)
+self.quizzes.append(Quiz(question, choices, answer))
+print("퀴즈가 추가되었습니다.")
+self.save_state()
+```
+
+문제와 선택지 네 개, 정답 번호를 모두 받은 뒤 `Quiz` 객체를 목록에 추가하고 저장합니다. 입력 중간에 취소하면 목록에 추가하는 줄까지 도달하지 않습니다.
+
+
 ### 퀴즈 목록 (3)
 
 등록된 문제의 개수와 제목을 확인합니다. 아래는 기본 문제 5개와 화면 출력 함수를 묻는 추가 문제 1개가 등록됐을 때의 화면입니다.
 
 ![등록된 파이썬 퀴즈 6개](docs/screenshots/quiz-list.png)
+
+**코드 · QuizGame.list_quizzes()**
+
+```python
+for number, quiz in enumerate(self.quizzes, start=1):
+    print(f"[{number}] {quiz.question}")
+```
+
+`enumerate(..., start=1)`로 각 문제에 1부터 번호를 붙이고 제목을 출력합니다.
+
 
 ### 퀴즈 풀이 (1)
 
@@ -76,17 +115,52 @@ Ctrl+C 또는 입력 스트림 종료 시 안내 후 저장을 시도합니다.
 
 ![퀴즈 출제, 정오답 안내, 이번 게임 결과](docs/screenshots/quiz-play.png)
 
+**코드 · QuizGame.play()의 정답 판정**
+
+```python
+answer = read_number("정답 번호 (1~4): ", 1, 4)
+if quiz.is_correct(answer):
+    print("정답입니다!")
+    correct += 1
+```
+
+입력 함수가 반환한 정수로 정답을 비교하고, 맞힌 경우 정답 수를 1 증가시킵니다. 마지막에 정답 수를 전체 문제 수로 나눠 100점 만점으로 환산합니다.
+
+
 ### 최고 점수 확인 (4)
 
 완료한 게임 중 가장 높은 점수를 보여줍니다. 아래의 **100점**은 저장된 최고 기록입니다. 완료 기록이 없으면 미플레이 안내가 나옵니다.
 
 ![최고 점수 100점](docs/screenshots/quiz-score.png)
 
+**코드 · QuizGame.show_score()**
+
+```python
+if self.best_score is None:
+    print("아직 완료한 게임이 없습니다. 퀴즈를 먼저 풀어 보세요.")
+else:
+    print(f"최고 점수: {self.best_score:g}점 (100점 만점)")
+```
+
+`None`이면 완료 기록이 없다는 안내를 출력합니다. 0점도 완료 기록이므로 최고 점수로 표시할 수 있습니다.
+
+
 ### 종료와 재실행 (5)
 
 `5`를 누르면 종료 시 저장을 시도합니다. 아래 사진에는 저장 성공 안내가 표시됩니다. 재실행 후 `3`과 `4`를 눌러 문제와 최고 점수가 유지되는지 확인할 수 있습니다.
 
 ![종료 시 데이터 저장 성공 안내](docs/screenshots/quiz-save.png)
+
+**코드 · QuizGame.run()의 종료 처리**
+
+```python
+finally:
+    if self.save_state():
+        print("데이터를 저장했습니다.")
+```
+
+메뉴에서 5를 골라 반복을 끝내거나 Ctrl+C·EOF를 처리한 뒤에도 `finally`에서 저장을 시도합니다. 성공했을 때만 저장 완료 메시지를 출력합니다.
+
 
 메뉴에 `abc`, 빈 입력, `9`를 입력하면 재입력 안내도 확인할 수 있습니다.
 

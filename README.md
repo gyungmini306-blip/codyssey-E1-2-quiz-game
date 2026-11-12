@@ -304,7 +304,9 @@ Ctrl+C·EOF 중단 후 저장, 읽기·쓰기 오류 처리, 랜덤 출제 시 �
 git log --oneline --graph --all
 ```
 
-Git 그래프 캡처는 이 절에 추가합니다.
+아래 화면에서 기능별 커밋과 `feature/play`가 `main`에 병합된 이력을 확인할 수 있습니다.
+
+![Git 커밋과 브랜치 병합 그래프](docs/screenshots/git-graph.png)
 
 ## GitHub 연결 및 복제 실습 방법
 
@@ -351,7 +353,7 @@ git pull
 - [x] 퀴즈 추가와 최고 점수 확인 실행 스크린샷
 - [x] 퀴즈 목록 실행 스크린샷
 - [x] 종료 후 재실행하여 데이터 유지 확인 (자동 검증 및 실제 프로세스 실행)
-- [ ] `git log --oneline --graph --all` 결과 스크린샷
+- [x] `git log --oneline --graph --all` 결과 스크린샷
 - [x] GitHub 저장소 clone → 변경 → commit → push → 원본 pull 실습
 - [ ] 코드의 입력 처리, 클래스, 저장 흐름을 직접 설명할 수 있는지 확인
 

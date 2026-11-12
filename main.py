@@ -39,34 +39,52 @@ class QuizGame:
         )
         self.quizzes = create_default_quizzes()
         self.best_score = None
+        self.backup_path = self.state_path.with_suffix(self.state_path.suffix + ".bak")
         self.load_state()
 
+    def decode_state(self, content):
+        data = json.loads(content)
+        if not isinstance(data, dict) or not isinstance(data.get("quizzes"), list):
+            raise ValueError("quizzes는 목록이어야 합니다.")
+        quizzes = []
+        for item in data["quizzes"]:
+            if not isinstance(item, dict):
+                raise ValueError("퀴즈 항목은 객체여야 합니다.")
+            quizzes.append(Quiz(item["question"], item["choices"], item["answer"]))
+        best_score = data["best_score"]
+        if best_score is not None and (
+            type(best_score) not in (int, float)
+            or not 0 <= best_score <= 100
+        ):
+            raise ValueError("최고 점수는 null 또는 0~100의 숫자여야 합니다.")
+        return quizzes, best_score
+
     def load_state(self):
+        for path in (self.state_path, self.backup_path):
+            try:
+                quizzes, score = self.decode_state(path.read_text(encoding="utf-8"))
+            except FileNotFoundError:
+                continue
+            except (ValueError, KeyError, TypeError, RecursionError, OSError):
+                print(f"저장 파일을 사용할 수 없습니다: {path.name}")
+                continue
+            self.quizzes, self.best_score = quizzes, score
+            if path == self.backup_path:
+                print("백업에서 데이터를 복원했습니다. 다음 저장 시 state.json에 반영합니다.")
+            else:
+                print(f"저장된 데이터를 불러왔습니다. (퀴즈 {len(quizzes)}개)")
+            return
+        print("사용 가능한 저장 파일이 없어 기본 퀴즈로 시작합니다.")
+
+    def backup_current_state(self):
         try:
-            with self.state_path.open("r", encoding="utf-8") as file:
-                data = json.load(file)
-            if not isinstance(data, dict) or not isinstance(data.get("quizzes"), list):
-                raise ValueError("quizzes는 목록이어야 합니다.")
-            quizzes = []
-            for item in data["quizzes"]:
-                if not isinstance(item, dict):
-                    raise ValueError("퀴즈 항목은 객체여야 합니다.")
-                quizzes.append(Quiz(item["question"], item["choices"], item["answer"]))
-            best_score = data["best_score"]
-            if best_score is not None and (
-                type(best_score) not in (int, float)
-                or not 0 <= best_score <= 100
-            ):
-                raise ValueError("최고 점수는 null 또는 0~100의 숫자여야 합니다.")
-            self.quizzes = quizzes
-            self.best_score = best_score
-            print(f"저장된 데이터를 불러왔습니다. (퀴즈 {len(quizzes)}개)")
-        except FileNotFoundError:
-            print("저장 파일이 없어 기본 퀴즈 5개로 시작합니다.")
-        except (ValueError, KeyError, TypeError, UnicodeError, RecursionError):
-            print("저장 파일이 손상되었거나 형식이 올바르지 않아 기본 데이터로 초기화합니다.")
-        except OSError:
-            print("저장 파일을 읽을 수 없어 기본 데이터로 시작합니다.")
+            content = self.state_path.read_text(encoding="utf-8")
+            self.decode_state(content)
+        except (FileNotFoundError, ValueError, KeyError, TypeError, RecursionError):
+            return
+        temporary = self.backup_path.with_suffix(".bak.tmp")
+        temporary.write_text(content, encoding="utf-8")
+        temporary.replace(self.backup_path)
 
     def save_state(self):
         data = {
@@ -78,6 +96,7 @@ class QuizGame:
             with temporary_path.open("w", encoding="utf-8") as file:
                 json.dump(data, file, ensure_ascii=False, indent=2, allow_nan=False)
                 file.write("\n")
+            self.backup_current_state()
             temporary_path.replace(self.state_path)
             return True
         except (OSError, ValueError, UnicodeError):

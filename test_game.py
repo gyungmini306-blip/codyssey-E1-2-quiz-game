@@ -89,6 +89,20 @@ class GameTests(unittest.TestCase):
                 self.assertEqual(len(restored.quizzes), 5)
                 self.assertIsNone(restored.best_score)
 
+    def test_corrupt_primary_recovers_and_preserves_valid_backup(self):
+        game = QuizGame(self.path)
+        game.best_score = 70
+        self.assertTrue(game.save_state())
+        game.best_score = 90
+        self.assertTrue(game.save_state())
+        backup = game.backup_path.read_bytes()
+        self.path.write_text("{broken", encoding="utf-8")
+        recovered = QuizGame(self.path)
+        self.assertEqual(recovered.best_score, 70)
+        self.assertTrue(recovered.save_state())
+        self.assertEqual(game.backup_path.read_bytes(), backup)
+        self.assertEqual(QuizGame(self.path).best_score, 70)
+
     def test_file_access_failures_are_reported(self):
         game = QuizGame(self.path)
         with patch.object(Path, "open", side_effect=PermissionError):

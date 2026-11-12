@@ -95,8 +95,12 @@ class QuizGame:
         temporary.replace(self.backup_path)
 
     def save_state(self):
+        quizzes = []
+        for quiz in self.quizzes:
+            quizzes.append(quiz.to_dict())
+
         data = {
-            "quizzes": [quiz.to_dict() for quiz in self.quizzes],
+            "quizzes": quizzes,
             "best_score": self.best_score,
         }
         temporary_path = self.state_path.with_name(self.state_path.name + ".tmp")
@@ -132,7 +136,9 @@ class QuizGame:
     def add_quiz(self):
         print("\n새 퀴즈를 등록합니다.")
         question = read_text("문제: ")
-        choices = [read_text(f"선택지 {number}: ") for number in range(1, 5)]
+        choices = []
+        for number in range(1, 5):
+            choices.append(read_text(f"선택지 {number}: "))
         answer = read_number("정답 번호 (1~4): ", 1, 4)
         self.quizzes.append(Quiz(question, choices, answer))
         print("퀴즈가 추가되었습니다.")
@@ -172,7 +178,7 @@ class QuizGame:
                 if choice == 5:
                     print("퀴즈 게임을 종료합니다.")
                     break
-                if choice == 1:
+                elif choice == 1:
                     self.play()
                 elif choice == 2:
                     self.add_quiz()

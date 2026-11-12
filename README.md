@@ -83,7 +83,9 @@ for number, quiz in enumerate(questions, start=1):
 
 ```python
 question = read_text("문제: ")
-choices = [read_text(f"선택지 {number}: ") for number in range(1, 5)]
+choices = []
+for number in range(1, 5):
+    choices.append(read_text(f"선택지 {number}: "))
 answer = read_number("정답 번호 (1~4): ", 1, 4)
 self.quizzes.append(Quiz(question, choices, answer))
 print("퀴즈가 추가되었습니다.")

@@ -44,19 +44,27 @@ class QuizGame:
 
     def decode_state(self, content):
         data = json.loads(content)
-        if not isinstance(data, dict) or not isinstance(data.get("quizzes"), list):
+        if not isinstance(data, dict):
+            raise ValueError("저장 데이터는 딕셔너리여야 합니다.")
+
+        items = data.get("quizzes")
+        if not isinstance(items, list):
             raise ValueError("quizzes는 목록이어야 합니다.")
+
         quizzes = []
-        for item in data["quizzes"]:
+        for item in items:
             if not isinstance(item, dict):
                 raise ValueError("퀴즈 항목은 객체여야 합니다.")
-            quizzes.append(Quiz(item["question"], item["choices"], item["answer"]))
+            quizzes.append(Quiz(item.get("question"), item.get("choices"), item.get("answer")))
+        if "best_score" not in data:
+            raise ValueError("최고 점수 항목이 없습니다.")
         best_score = data["best_score"]
-        if best_score is not None and (
-            type(best_score) not in (int, float)
-            or not 0 <= best_score <= 100
-        ):
-            raise ValueError("최고 점수는 null 또는 0~100의 숫자여야 합니다.")
+        if best_score is not None:
+            if type(best_score) not in (int, float):
+                raise ValueError("최고 점수는 숫자여야 합니다.")
+            if not 0 <= best_score <= 100:
+                raise ValueError("최고 점수는 0~100이어야 합니다.")
+
         return quizzes, best_score
 
     def load_state(self):
@@ -65,7 +73,7 @@ class QuizGame:
                 quizzes, score = self.decode_state(path.read_text(encoding="utf-8"))
             except FileNotFoundError:
                 continue
-            except (ValueError, KeyError, TypeError, RecursionError, OSError):
+            except (ValueError, RecursionError, OSError):
                 print(f"저장 파일을 사용할 수 없습니다: {path.name}")
                 continue
             self.quizzes, self.best_score = quizzes, score
@@ -80,7 +88,7 @@ class QuizGame:
         try:
             content = self.state_path.read_text(encoding="utf-8")
             self.decode_state(content)
-        except (FileNotFoundError, ValueError, KeyError, TypeError, RecursionError):
+        except (FileNotFoundError, ValueError, RecursionError):
             return
         temporary = self.backup_path.with_suffix(".bak.tmp")
         temporary.write_text(content, encoding="utf-8")
@@ -99,7 +107,7 @@ class QuizGame:
             self.backup_current_state()
             temporary_path.replace(self.state_path)
             return True
-        except (OSError, ValueError, UnicodeError):
+        except (OSError, ValueError):
             print("파일 저장에 실패했습니다. 폴더 권한과 저장 공간을 확인하세요.")
             return False
 

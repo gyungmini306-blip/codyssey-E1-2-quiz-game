@@ -6,12 +6,15 @@ class Quiz:
             raise ValueError("문제가 비어 있거나 문자열이 아닙니다.")
         if not isinstance(choices, list) or len(choices) != 4:
             raise ValueError("선택지는 4개여야 합니다.")
-        if any(not isinstance(item, str) or not item.strip() for item in choices):
-            raise ValueError("선택지는 비어 있지 않은 문자열이어야 합니다.")
+        cleaned_choices = []
+        for choice in choices:
+            if not isinstance(choice, str) or not choice.strip():
+                raise ValueError("선택지는 비어 있지 않은 문자열이어야 합니다.")
+            cleaned_choices.append(choice.strip())
         if type(answer) is not int or not 1 <= answer <= 4:
             raise ValueError("정답 번호는 1~4의 정수여야 합니다.")
         self.question = question.strip()
-        self.choices = [item.strip() for item in choices]
+        self.choices = cleaned_choices
         self.answer = answer
 
     def display(self):

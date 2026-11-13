@@ -59,12 +59,12 @@ class QuizGame:
         if "best_score" not in data:
             raise ValueError("최고 점수 항목이 없습니다.")
         best_score = data["best_score"]
-        if best_score is not None:
-            if type(best_score) not in (int, float):
-                raise ValueError("최고 점수는 숫자여야 합니다.")
-            if not 0 <= best_score <= 100:
-                raise ValueError("최고 점수는 0~100이어야 합니다.")
-
+        if best_score is None:
+            return quizzes, None
+        if type(best_score) not in (int, float):
+            raise ValueError("최고 점수는 숫자여야 합니다.")
+        if not 0 <= best_score <= 100:
+            raise ValueError("최고 점수는 0~100이어야 합니다.")
         return quizzes, best_score
 
     def load_state(self):

@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from main import QuizGame, read_number
+from quizgame import QuizGame, read_number
 
 
 class GameTests(unittest.TestCase):
@@ -27,7 +27,7 @@ class GameTests(unittest.TestCase):
         game = QuizGame(self.path)
         with patch("builtins.input", side_effect=["", "새 문제", "가", "나", "다", "라", "x", "5", "2"]):
             game.add_quiz()
-        with patch("main.random.shuffle"), patch("builtins.input", side_effect=["1", "2", "3", "4", "1", "2"]):
+        with patch("quizgame.random.shuffle"), patch("builtins.input", side_effect=["1", "2", "3", "4", "1", "2"]):
             self.assertEqual(game.play(), 100)
         restored = QuizGame(self.path)
         self.assertEqual(len(restored.quizzes), 6)
@@ -41,7 +41,7 @@ class GameTests(unittest.TestCase):
         game = QuizGame(self.path)
         original_questions = [quiz.question for quiz in game.quizzes]
         reversed_answers = [str(quiz.answer) for quiz in reversed(game.quizzes)]
-        with patch("main.random.shuffle", side_effect=lambda items: items.reverse()), patch(
+        with patch("quizgame.random.shuffle", side_effect=lambda items: items.reverse()), patch(
             "builtins.input", side_effect=reversed_answers
         ):
             self.assertEqual(game.play(), 100)

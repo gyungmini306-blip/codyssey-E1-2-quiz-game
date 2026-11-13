@@ -7,7 +7,7 @@ import tracemalloc
 from pathlib import Path
 from time import perf_counter
 
-from main import QuizGame
+from quizgame import QuizGame
 from quiz import Quiz
 
 

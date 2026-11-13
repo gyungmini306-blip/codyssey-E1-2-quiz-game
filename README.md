@@ -200,7 +200,7 @@ finally:
 | 클래스 | 정의 위치 | 처음 읽을 부분 |
 |---|---|---|
 | `Quiz` | [quiz.py 1행](quiz.py#L1) | `__init__()`에서 문제 문장, 선택지, 정답을 저장합니다. `is_correct(answer)`는 입력한 답이 정답과 같은지 알려줍니다. |
-| `QuizGame` | [main.py 34행](main.py#L34) | `run()`이 메뉴를 반복하고, `list_quizzes()`가 등록된 문제를 하나씩 출력합니다. |
+| `QuizGame` | [quizgame.py 34행](quizgame.py#L34) | `run()`이 메뉴를 반복하고, `list_quizzes()`가 등록된 문제를 하나씩 출력합니다. |
 
 처음에는 `Quiz`를 문제 카드 한 장, `QuizGame`을 카드 여러 장으로 진행하는 게임이라고 생각하면 됩니다. 메뉴에서 3을 눌렀을 때 `run()`이 `list_quizzes()`를 호출하고, 이 메서드는 각 카드의 `question`을 읽어 출력합니다.
 
@@ -208,7 +208,8 @@ finally:
 
 ```text
 e1-2/
-├── main.py          # QuizGame, 입력 처리, 메뉴, 진행, 저장/불러오기
+├── main.py          # 게임 실행 시작
+├── quizgame.py      # QuizGame, 입력 처리, 진행, 저장/불러오기
 ├── quiz.py          # Quiz: 개별 문제 검증, 출력, 정답 확인
 ├── defaults.py      # 기본 퀴즈 5개 생성
 ├── benchmark.py     # 퀴즈 1,000개 성능 측정

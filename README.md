@@ -27,7 +27,9 @@ Windows에서 `python` 명령이 없다면 `py main.py`를 사용합니다.
 - Python 표준 라이브러리만 사용
 - 실제 확인 환경: Windows / PowerShell / Python 3.13.3 / Git 2.52.0.windows.1
 
-개발 환경 캡처는 이 절에 추가합니다.
+![Python 및 Git 버전과 사용자 설정](docs/screenshots/environment.png)
+
+![VS Code 소스 제어 그래프](docs/screenshots/vscode-git.png)
 
 ## 기능 목록
 
@@ -360,7 +362,7 @@ git pull
 - [x] GitHub 저장소 업로드 및 URL 확인
 - [x] 필수 프로그램 기능과 보너스 랜덤 출제 검증
 - [x] 실제 실행 및 데이터 유지·오류 처리 결과를 텍스트로 기록
-- [ ] VS Code, Python 버전, Git 설정 등 개발 환경 스크린샷
+- [x] VS Code, Python 버전, Git 설정 등 개발 환경 스크린샷
 - [x] 퀴즈 플레이와 종료·저장 실행 스크린샷
 - [x] 퀴즈 추가와 최고 점수 확인 실행 스크린샷
 - [x] 퀴즈 목록 실행 스크린샷

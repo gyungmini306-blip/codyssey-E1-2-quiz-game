@@ -67,10 +67,14 @@ class QuizGame:
             raise ValueError("최고 점수는 0~100이어야 합니다.")
         return quizzes, best_score
 
+    def read_saved_state(self, path):
+        content = path.read_text(encoding="utf-8")
+        return content, self.decode_state(content)
+
     def load_state(self):
         for path in (self.state_path, self.backup_path):
             try:
-                quizzes, score = self.decode_state(path.read_text(encoding="utf-8"))
+                _, (quizzes, score) = self.read_saved_state(path)
             except FileNotFoundError:
                 continue
             except (ValueError, RecursionError, OSError):
@@ -86,13 +90,15 @@ class QuizGame:
 
     def backup_current_state(self):
         try:
-            content = self.state_path.read_text(encoding="utf-8")
-            self.decode_state(content)
+            content, _ = self.read_saved_state(self.state_path)
         except (FileNotFoundError, ValueError, RecursionError):
             return
-        temporary = self.backup_path.with_suffix(".bak.tmp")
+        self.write_saved_state(self.backup_path, content)
+
+    def write_saved_state(self, path, content):
+        temporary = path.with_name(path.name + ".tmp")
         temporary.write_text(content, encoding="utf-8")
-        temporary.replace(self.backup_path)
+        temporary.replace(path)
 
     def save_state(self):
         quizzes = []
@@ -103,13 +109,10 @@ class QuizGame:
             "quizzes": quizzes,
             "best_score": self.best_score,
         }
-        temporary_path = self.state_path.with_name(self.state_path.name + ".tmp")
         try:
-            with temporary_path.open("w", encoding="utf-8") as file:
-                json.dump(data, file, ensure_ascii=False, indent=2, allow_nan=False)
-                file.write("\n")
+            content = json.dumps(data, ensure_ascii=False, indent=2, allow_nan=False)
             self.backup_current_state()
-            temporary_path.replace(self.state_path)
+            self.write_saved_state(self.state_path, content + "\n")
             return True
         except (OSError, ValueError):
             print("파일 저장에 실패했습니다. 폴더 권한과 저장 공간을 확인하세요.")

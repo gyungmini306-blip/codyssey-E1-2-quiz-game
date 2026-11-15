@@ -39,7 +39,6 @@ class QuizGame:
         )
         self.quizzes = create_default_quizzes()
         self.best_score = None
-        self.backup_path = self.state_path.with_suffix(self.state_path.suffix + ".bak")
         self.load_state()
 
     def decode_state(self, content):
@@ -67,33 +66,16 @@ class QuizGame:
             raise ValueError("최고 점수는 0~100이어야 합니다.")
         return quizzes, best_score
 
-    def read_saved_state(self, path):
-        content = path.read_text(encoding="utf-8")
-        return content, self.decode_state(content)
-
     def load_state(self):
-        for path in (self.state_path, self.backup_path):
-            try:
-                _, (quizzes, score) = self.read_saved_state(path)
-            except FileNotFoundError:
-                continue
-            except (ValueError, RecursionError, OSError):
-                print(f"저장 파일을 사용할 수 없습니다: {path.name}")
-                continue
-            self.quizzes, self.best_score = quizzes, score
-            if path == self.backup_path:
-                print("백업에서 데이터를 복원했습니다. 다음 저장 시 state.json에 반영합니다.")
-            else:
-                print(f"저장된 데이터를 불러왔습니다. (퀴즈 {len(quizzes)}개)")
-            return
-        print("사용 가능한 저장 파일이 없어 기본 퀴즈로 시작합니다.")
-
-    def backup_current_state(self):
         try:
-            content, _ = self.read_saved_state(self.state_path)
-        except (FileNotFoundError, ValueError, RecursionError):
-            return
-        self.write_saved_state(self.backup_path, content)
+            content = self.state_path.read_text(encoding="utf-8")
+            self.quizzes, self.best_score = self.decode_state(content)
+        except FileNotFoundError:
+            print("저장 파일이 없어 기본 퀴즈로 시작합니다.")
+        except (ValueError, OSError):
+            print("저장 파일을 읽을 수 없어 기본 퀴즈로 시작합니다.")
+        else:
+            print(f"저장된 데이터를 불러왔습니다. (퀴즈 {len(self.quizzes)}개)")
 
     def write_saved_state(self, path, content):
         temporary = path.with_name(path.name + ".tmp")
@@ -111,7 +93,6 @@ class QuizGame:
         }
         try:
             content = json.dumps(data, ensure_ascii=False, indent=2, allow_nan=False)
-            self.backup_current_state()
             self.write_saved_state(self.state_path, content + "\n")
             return True
         except (OSError, ValueError):

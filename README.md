@@ -6,6 +6,10 @@
 - GitHub 저장소: [codyssey-E1-2-quiz-game](https://github.com/gyungmini306-blip/codyssey-E1-2-quiz-game)
 - 이전 과제: [E1-1 개발 워크스테이션](https://github.com/gyungmini306-blip/codyssey-E1-1-dev-workstation)
 
+## 주제 선정 이유
+
+입력과 자료형, 반복문, 함수, 클래스처럼 이 게임을 구현하는 데 사용한 파이썬 기초를 문제로 풀며 복습할 수 있도록 이 주제를 선택했습니다.
+
 ## 실행 방법
 
 프로젝트 폴더에서 다음 명령을 실행합니다.
@@ -17,10 +21,6 @@ python main.py
 Windows에서 `python` 명령이 없다면 `py main.py`를 사용합니다.
 외부 패키지 설치는 필요하지 않습니다.
 
-## 주제 선정 이유
-
-입력과 자료형, 반복문, 함수, 클래스처럼 이 게임을 구현하는 데 사용한 파이썬 기초를 문제로 풀며 복습할 수 있도록 이 주제를 선택했습니다.
-
 ## 개발 환경
 
 - Python 3.10 이상
@@ -28,8 +28,6 @@ Windows에서 `python` 명령이 없다면 `py main.py`를 사용합니다.
 - 실제 확인 환경: Windows / PowerShell / Python 3.13.3 / Git 2.52.0.windows.1
 
 ![Python 및 Git 버전과 사용자 설정](docs/screenshots/environment.png)
-
-![VS Code 소스 제어 그래프](docs/screenshots/vscode-git.png)
 
 ## 기능 목록
 
@@ -47,29 +45,6 @@ Ctrl+C 또는 입력 스트림 종료 시 안내 후 저장을 시도합니다.
 ## 기본 문제
 
 파이썬 기초 문제 5개를 제공합니다. 입력과 자료형, 반복 범위, 반환값, 객체 초기화, 딕셔너리 키를 다룹니다. 문제를 바꾸려면 `defaults.py`와 이 설명을 함께 수정하세요. 이미 저장한 데이터는 실행 시 기본 문제보다 우선합니다.
-
-
-## 보너스 과제: 랜덤 출제
-
-게임을 시작할 때마다 Python 표준 라이브러리 `random`의 `shuffle()`로 문제 순서를 섞습니다.
-`self.quizzes.copy()`로 만든 목록을 섞으므로 퀴즈 목록과 저장 파일의 등록 순서는 유지합니다.
-선택지와 정답 번호는 바뀌지 않으며, 모든 문제를 한 번씩 출제합니다.
-무작위이므로 이전 게임과 같은 순서가 나올 수도 있습니다.
-
-
-**코드 · QuizGame.play()의 랜덤 출제**
-
-```python
-questions = self.quizzes.copy()
-random.shuffle(questions)
-total = len(questions)
-print(f"\n퀴즈를 무작위 순서로 출제합니다. (총 {total}문제)")
-for number, quiz in enumerate(questions, start=1):
-    print(f"\n[문제 {number}/{total}]")
-    quiz.display()
-```
-
-`copy()`는 이번 출제에 쓸 별도 리스트를 만듭니다. `random.shuffle(questions)`는 그 리스트의 순서를 바꿉니다. 아래 `for`가 `self.quizzes` 대신 `questions`를 순회하므로 출제 순서만 바뀌고 등록 목록 순서는 유지됩니다.
 
 ## 직접 체험하기
 
@@ -167,6 +142,28 @@ finally:
 
 
 메뉴에 `abc`, 빈 입력, `9`를 입력하면 재입력 안내도 확인할 수 있습니다.
+
+## 보너스 과제: 랜덤 출제
+
+게임을 시작할 때마다 Python 표준 라이브러리 `random`의 `shuffle()`로 문제 순서를 섞습니다.
+`self.quizzes.copy()`로 만든 목록을 섞으므로 퀴즈 목록과 저장 파일의 등록 순서는 유지합니다.
+선택지와 정답 번호는 바뀌지 않으며, 모든 문제를 한 번씩 출제합니다.
+무작위이므로 이전 게임과 같은 순서가 나올 수도 있습니다.
+
+
+**코드 · QuizGame.play()의 랜덤 출제**
+
+```python
+questions = self.quizzes.copy()
+random.shuffle(questions)
+total = len(questions)
+print(f"\n퀴즈를 무작위 순서로 출제합니다. (총 {total}문제)")
+for number, quiz in enumerate(questions, start=1):
+    print(f"\n[문제 {number}/{total}]")
+    quiz.display()
+```
+
+`copy()`는 이번 출제에 쓸 별도 리스트를 만듭니다. `random.shuffle(questions)`는 그 리스트의 순서를 바꿉니다. 아래 `for`가 `self.quizzes` 대신 `questions`를 순회하므로 출제 순서만 바뀌고 등록 목록 순서는 유지됩니다.
 
 ## 이 과제에서 배울 내용
 
@@ -305,6 +302,10 @@ git log --oneline --graph --all
 아래 화면에서 기능별 커밋과 `feature/play`가 `main`에 병합된 이력을 확인할 수 있습니다.
 
 ![Git 커밋과 브랜치 병합 그래프](docs/screenshots/git-graph.png)
+
+VS Code의 소스 제어에서도 브랜치가 갈라지고 병합된 이력을 확인할 수 있습니다.
+
+![VS Code 소스 제어 그래프](docs/screenshots/vscode-git.png)
 
 ## GitHub 연결 및 복제 실습 방법
 

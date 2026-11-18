@@ -305,10 +305,6 @@ git log --oneline --graph --all
 
 ![Git 커밋과 브랜치 병합 그래프](docs/screenshots/git-graph.png)
 
-VS Code의 소스 제어에서도 브랜치가 갈라지고 병합된 이력을 확인할 수 있습니다.
-
-![VS Code 소스 제어 그래프](docs/screenshots/vscode-git.png)
-
 ## GitHub 연결 및 복제 실습 방법
 
 아래는 이 프로젝트의 GitHub 연결 및 복제 실습 명령입니다. 과제 순서는 초기 설정 직후 첫 커밋과 푸시입니다. 이 저장소의 실제 이력에서는 초기 설정을 먼저 커밋했고, 기능 구현과 README 정리 후 첫 푸시를 했습니다.
@@ -349,7 +345,7 @@ git pull
 - [x] GitHub 저장소 업로드 및 URL 확인
 - [x] 필수 프로그램 기능과 보너스 랜덤 출제 검증
 - [x] 실제 실행 및 데이터 유지·오류 처리 결과를 텍스트로 기록
-- [x] VS Code, Python 버전, Git 설정 등 개발 환경 스크린샷
+- [x] Python 버전 및 Git 설정 등 개발 환경 스크린샷
 - [x] 퀴즈 플레이와 종료·저장 실행 스크린샷
 - [x] 퀴즈 추가와 최고 점수 확인 실행 스크린샷
 - [x] 퀴즈 목록 실행 스크린샷
